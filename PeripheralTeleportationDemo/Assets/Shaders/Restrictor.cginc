@@ -57,9 +57,9 @@ float uv2Radius3(float2 uv, int eyeIndex) {
 	// Calculate field of view
 	float4 coords = screenCoords(uv, eyeIndex);
 	float2 adjCoords; 
-	if (coords.x * _RestrictorShift > 0) {
-		coords.x = 0;
+	adjCoords = coords.xy / (_ScreenParams.xy / 2) - float2(_RestrictorShift, 0);
+	if (adjCoords.x * _RestrictorShift > 0) {
+		adjCoords.x = 0;
 	}
-	adjCoords = coords.xy / (_ScreenParams.xy/2);
 	return pow(pow(abs(adjCoords.x), _SqlrPow) + pow(abs(adjCoords.y), _SqlrPow), 1 / _SqlrPow);
 }
